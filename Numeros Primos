@@ -1,0 +1,39 @@
+  const readline = require('readline');
+const { promisify } = require('util');
+
+
+async function veriNumPrimos() {
+
+    const rl = readline.Interface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    const question = promisify(rl.question).bind(rl);
+
+    const numIngresado = await question("Ingrese un numero: ");
+    let numVeriPrimo = Number(numIngresado);
+
+    if (numVeriPrimo <= 1) return false;
+
+    for (let i = 2; i <= Math.sqrt(numVeriPrimo); i++) {
+        if (numVeriPrimo % i === 0) {
+            return false
+        }
+    }
+
+    return true;
+
+}
+
+veriNumPrimos()
+    .then(respuesta => {
+        if (respuesta === true) {
+            console.log("Es un numero primo");
+        } else {
+            console.log("No es un numero primo");
+        }
+    })
+    .catch(error => {
+        console.log("Surgio un error");
+    })
